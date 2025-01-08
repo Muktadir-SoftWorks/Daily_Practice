@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Edit Product Data</h2>
+    <form id="editProductForm">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" required>
+
+        <label for="productCode">Product Code:</label>
+        <input type="text" id="productCode" required>
+
+        <label for="ProdImage">Product Image URL:</label>
+        <input type="text" id="ProdImage" required>
+
+        <label for="unitPrice">Unit Price:</label>
+        <input type="number" id="unitPrice" required>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" required>
+
+        <label for="TotalPrice">Total Price:</label>
+        <input type="number" id="TotalPrice" required>
+
+        <button type="submit" class="button-primary">Update Product</button>
+    </form>
+</div>
+
+<script>
+document.getElementById('editProductForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    updateProduct();
+});
+
+async function updateProduct() {
+    const productId = new URLSearchParams(window.location.search).get('id');
+    if (!productId) {
+        alert("No product ID provided in the URL.");
+        return;
+    }
+
+    const productData = {
+        ProductName: document.getElementById('productName').value,
+        ProductCode: document.getElementById('productCode').value,
+        Img: document.getElementById('ProdImage').value,
+        UnitPrice: parseFloat(document.getElementById('unitPrice').value),
+        Qty: parseInt(document.getElementById('quantity').value),
+        TotalPrice: parseFloat(document.getElementById('TotalPrice').value)
+    };
+
+    const response = await fetch(`https://crud.teamrabbil.com/api/v1/UpdateProduct/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(productData)
+    });
+
+    if (response.ok) {
+        alert("Product updated successfully!");
+        window.location.href = 'index.html'; // Redirect to home page
+    } else {
+        alert("Failed to update product.");
+    }
+}
+
+window.onload = function() {
+    fetchProductDetails();
+};
+
+async function fetchProductDetails() {
+    const productId = new URLSearchParams(window.location.search).get('id');
+    if (!productId) {
+        alert("No product ID provided in the URL.");
+        return;
+    }
+
+    const response = await fetch(`https://crud.teamrabbil.com/api/v1/ReadProductByID/${productId}`);
+    if (response.ok) {
+        const data = await response.json();
+        const product = data.data[0];
+        document.getElementById('productName').value = product.ProductName;
+        document.getElementById('productCode').value = product.ProductCode;
+        document.getElementById('ProdImage').value = product.Img;
+        document.getElementById('unitPrice').value = product.UnitPrice;
+        document.getElementById('quantity').value = product.Qty;
+        document.getElementById('TotalPrice').value = product.TotalPrice;
+    } else {
+        alert("Failed to load product details.");
+    }
+}
+</script>
+</body>
+</html>

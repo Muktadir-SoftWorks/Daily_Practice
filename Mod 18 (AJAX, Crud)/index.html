@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Product Data</h1>
+        <a href="create.html" class="button">Add new</a>
+        <div class="row">
+            <br>
+            <div class="column">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Product Code</th>
+                            <th>Unit Price</th>
+                            <th>Qty</th>
+                            <th>Total Price</th>
+                            <th>Delete</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ProductList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    async function getProducts() {
+        const url = 'https://crud.teamrabbil.com/api/v1/ReadProduct';
+        const response = await axios.get(url);
+        const products = response.data['data'];
+
+        // Clear the ProductList first to avoid duplicates
+        document.getElementById('ProductList').innerHTML = '';
+
+        products.forEach((item) => {
+            document.getElementById('ProductList').innerHTML += `
+                <tr id="product-${item['_id']}">
+                    <td>${item['ProductName']}</td>
+                    <td>${item['ProductCode']}</td>
+                    <td>${item['UnitPrice']}</td>
+                    <td>${item['Qty']}</td>
+                    <td>${item['TotalPrice']}</td>
+                    <td><button onclick="deleteProduct('${item['_id']}')">Delete</button></td>
+                      <td><button onclick="gotoUpdate('${item['_id']}')">Edit</button></td>
+                </tr>
+            `;
+        });
+    }
+
+    async function deleteProduct(_id) {
+        const url = `https://crud.teamrabbil.com/api/v1/DeleteProduct/${_id}`;
+            const response = await axios.get(url); // Using GET method for deletion
+            if (response.status === 200) {
+                // Remove the product from the DOM
+                document.getElementById(`product-${_id}`).remove();
+            
+    }}
+
+    function gotoUpdate(_id){
+        window.location = `update.html?id=${_id}`
+    }
+
+    // Fetch and display the products when the page loads
+    getProducts();
+</script>
+</html>
