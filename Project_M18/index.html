@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .product-card, .cart-item {
+            margin-bottom: 10px;
+        }
+        .product-image img {
+            width: 100%;
+            height: auto;
+        }
+        .cart-summary {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 300px;
+            background: white;
+            padding: 20px;
+            height: 100vh;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row" id="product-list">
+            <!-- Products will be added here dynamically -->
+        </div>
+    </div>
+    <div class="cart-summary">
+        <h4>CART</h4>
+        <ul id="cart-items" class="list-unstyled">
+            <!-- Cart items will be added here dynamically -->
+        </ul>
+        <h5>Total: $<span id="total-price">0.00</span></h5>
+        <button class="btn btn-success btn-block">PURCHASE</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
