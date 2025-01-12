@@ -126,14 +126,43 @@
                 </tr>
               </tbody>
             </table>
+
+            
+    <tr>
+      <th>Promo Code:</th>
+      <td>
+        <input
+          type="text"
+          id="promo-code"
+          class="form-control"
+          placeholder="Enter Promo Code"
+        />
+        <button id="apply-promo" class="btn btn-success mt-2">Apply</button>
+        <p id="promo-message" style="color: red; margin-top: 10px;"></p>
+      </td>
+    </tr>
+    <tr>
+      <th>Discount:</th>
+      <td>-$<span id="discount">0</span></td>
+    </tr>
+    <tr>
+      <th scope="row">Final Total:</th>
+      <td>$<span id="final-total">0</span></td>
+    </tr>
+    
+
             <div class="parces text-center">
-              <button class="btn btn-primary text-center">Buy Now</button>
+              <button class="btn btn-primary text-center" id="BuyNow">Buy Now</button>
             </div>
           </div>
         </div>
       </div>
     </main>
     <!--Main Section End-->
+
+
+
+
 
     <!--Add JavaScript File-->
     <script src="js/app.js"></script>

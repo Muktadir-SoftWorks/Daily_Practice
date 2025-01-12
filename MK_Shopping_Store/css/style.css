@@ -89,3 +89,12 @@ body {
 /*Media Query Responsive End*/
 
 /*CSS Custom Design End*/
+#promo-code {
+  width: 80%;
+  display: inline-block;
+}
+
+#apply-promo {
+  display: inline-block;
+  margin-left: 10px;
+}

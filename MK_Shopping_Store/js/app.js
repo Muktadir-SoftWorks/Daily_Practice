@@ -188,6 +188,7 @@ const showProducts = (products) => {
       onclick="addToCart(${product.id},${product.price})"  ,id="addToCart-btn"
       class="buy-now btn btn-primary">add to cart</button>
       </div>
+    
       `;
     document.getElementById("all-products").appendChild(div);
   }
@@ -249,5 +250,44 @@ const updateTotal = () => {
     getInputValue("total-tax");
   document.getElementById("total").innerText = grandTotal.toFixed(2);
 };
+
+
+// JavaScript for promo code functionality
+document.getElementById("apply-promo").addEventListener("click", function () {
+  const promoCode = document.getElementById("promo-code").value.trim();
+  const validPromoCodes = {
+    ostad10: 0.1, // 10% discount
+    ostad5: 0.05, // 5% discount
+  };
+
+  const price = parseFloat(document.getElementById("price").innerText) || 0;
+  const deliveryCharge = parseFloat(
+    document.getElementById("delivery-charge").innerText
+  ) || 0;
+  const tax = parseFloat(document.getElementById("total-tax").innerText) || 0;
+
+  const total = price + deliveryCharge + tax;
+  let discount = 0;
+
+  if (promoCode in validPromoCodes) {
+    discount = total * validPromoCodes[promoCode];
+    document.getElementById("promo-message").style.color = "green";
+    document.getElementById("promo-message").innerText =
+      "Promo code applied successfully!";
+  } else {
+    document.getElementById("promo-message").style.color = "red";
+    document.getElementById("promo-message").innerText =
+      "Invalid promo code. Please try again.";
+  }
+
+  // Update the cart summary
+  document.getElementById("discount").innerText = discount.toFixed(2);
+  document.getElementById("final-total").innerText = (total - discount).toFixed(
+    2
+  );
+});
+document.querySelector(".btn-primary").addEventListener("click", function () {
+  alert("Bought successfully!");
+});
 
 loadProducts();
