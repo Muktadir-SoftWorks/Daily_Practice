@@ -1,0 +1,34 @@
+{% extends 'base.html'%}
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h1 class="py-3 container">All Student List</h1>
+<div class="d-flex flex-wrap">
+  {% for student in students %}
+  <div class="card m-2" style="width: 18rem">
+      <img src="{{ student.photo.url }}" class="card-img-top" alt="..." height="200" width="200"/>
+      <div class="card-body">
+          <h5 class="card-title">{{ student.name }}</h5>
+          <div class="card-text">
+              <p>Id: {{ student.id }}</p>
+              <p>Email: {{ student.email }}</p>
+              <p>Phone: {{ student.phone }}</p>
+
+              <a href="{% url 'UpdateStudentData' id=student.id %}" class="btn btn-primary"> Edit</a>
+              <a href="{% url 'DeleteStudent' id=student.id %}"  class="btn btn-danger"> Delete</a>
+          </div>
+      </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock%}
+
+
+
+              <!-- <a href="{% url 'update_student' id=student.id %}" class="btn btn-primary"> Edit</a> -->
